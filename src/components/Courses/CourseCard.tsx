@@ -30,7 +30,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMyQzFBM0EiLz48L3N2Zz4="
         />
         {course.is_freemium && (
-          <span className="absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <span className="absolute top-2 right-2 bg-green-700 text-white px-3 py-1 rounded-full text-sm font-medium">
             Gratuito
           </span>
         )}
@@ -41,9 +41,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
             {course.category}
           </span>
         </div>
-        <h3 className="text-xl font-semibold mb-2 text-white line-clamp-2 h-[3.5rem]">
+        <h2 className="text-xl font-semibold mb-2 text-white line-clamp-2 h-[3.5rem]">
           {course.title}
-        </h3>
+        </h2>
         <p className="text-gray-400 mb-4 line-clamp-2 h-[2.8rem]">
           {shortDesc}
         </p>

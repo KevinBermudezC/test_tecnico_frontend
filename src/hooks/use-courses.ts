@@ -11,10 +11,13 @@ interface UseCourses {
   searchCourses: (searchTerm: string) => void
 }
 
-// Caché simple para almacenar los cursos
-let coursesCache: Course[] | null = null
-let lastFetchTime: number | null = null
+const CACHE_KEY = 'courses_cache'
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutos en milisegundos
+
+interface CacheData {
+  data: Course[]
+  timestamp: number
+}
 
 export function useCourses(): UseCourses {
   const [courses, setCourses] = useState<Course[]>([])
@@ -23,38 +26,67 @@ export function useCourses(): UseCourses {
   const [error, setError] = useState<Error | null>(null)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
 
-  const fetchCourses = useCallback(async () => {
+  const getCachedData = useCallback((): CacheData | null => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY)
+      if (!cached) return null
+      return JSON.parse(cached)
+    } catch (error) {
+      console.error('Error al leer el caché:', error)
+      return null
+    }
+  }, [])
+
+  const setCachedData = useCallback((data: Course[]) => {
+    try {
+      const cacheData: CacheData = {
+        data,
+        timestamp: Date.now()
+      }
+      localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData))
+    } catch (error) {
+      console.error('Error al guardar en caché:', error)
+    }
+  }, [])
+
+  const fetchCourses = useCallback(async (forceRefresh = false) => {
     try {
       // Evitamos iniciar otra petición si ya estamos cargando
-      if (isLoading && !isInitialLoad) return;
+      if (isLoading && !isInitialLoad && !forceRefresh) return;
       
       setIsLoading(true)
       setError(null)
 
       // Verificar si hay datos en caché y si son válidos
-      const now = Date.now()
-      if (coursesCache && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
-        setCourses(coursesCache)
-        setIsLoading(false)
-        setIsInitialLoad(false)
-        return
+      if (!forceRefresh) {
+        const cached = getCachedData()
+        if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+          console.log('Usando datos en caché')
+          setCourses(cached.data)
+          setIsLoading(false)
+          setIsInitialLoad(false)
+          return
+        }
       }
 
+      console.log('Iniciando petición de cursos...');
       // Si no hay caché o expiró, hacer la petición
       const data = await getCourses()
+      console.log('Datos recibidos:', data);
       
       // Actualizar caché
-      coursesCache = data
-      lastFetchTime = now
+      setCachedData(data)
       
       setCourses(data)
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Error al cargar los cursos'))
+      console.error('Error en fetchCourses:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Error al cargar los cursos';
+      setError(new Error(errorMessage))
     } finally {
       setIsLoading(false)
       setIsInitialLoad(false)
     }
-  }, []) // Eliminamos isLoading de las dependencias
+  }, [isInitialLoad, getCachedData, setCachedData])
 
   // Filtrar cursos basados en el término de búsqueda
   const filteredCourses = useMemo(() => {
@@ -85,7 +117,7 @@ export function useCourses(): UseCourses {
     filteredCourses,
     isLoading,
     error,
-    refetch: fetchCourses,
+    refetch: () => fetchCourses(true),
     searchCourses
   }
 }

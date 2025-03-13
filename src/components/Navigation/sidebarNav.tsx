@@ -39,7 +39,7 @@ export function AppSidebar() {
 
   return (
     <>
-      {/* Mobile menu button */}
+      {/* Boton para el menu */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-full bg-purple-900/80 text-white hover:bg-purple-800 shadow-lg backdrop-blur-sm transition-all duration-200"
@@ -52,7 +52,7 @@ export function AppSidebar() {
         )}
       </button>
 
-      {/* Overlay for mobile */}
+      {/* Overlay para movil */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden"
@@ -75,7 +75,7 @@ export function AppSidebar() {
             </Link>
           </div>
 
-          {/* Navigation */}
+          {/* Navegacion */}
           <nav className="flex-1 px-4">
             <ul className="space-y-1">
               {items.map((item) => {
@@ -101,7 +101,7 @@ export function AppSidebar() {
             </ul>
           </nav>
 
-          {/* Login button */}
+          {/* Boton de inicio */}
           <div className="p-4 mt-auto">
             <Link
               href="/login"
