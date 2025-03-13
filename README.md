@@ -2,6 +2,14 @@
 
 Plataforma educativa que muestra cursos disponibles con funcionalidades de búsqueda y filtrado. Desarrollada con Next.js, TypeScript y Tailwind CSS.
 
+## 🛠️ Tecnologías Utilizadas
+
+- [Next.js](https://nextjs.org/) - Framework de React
+- [TypeScript](https://www.typescriptlang.org/) - Superset de JavaScript
+- [Tailwind CSS](https://tailwindcss.com/) - Framework de CSS
+- [Axios](https://axios-http.com/) - Cliente HTTP
+- [Lucide React](https://lucide.dev/) - Iconos
+
 ## 🚀 Características
 
 - ✨ Interfaz moderna y responsive
@@ -81,13 +89,6 @@ src/
 └── utils/              # Utilidades y funciones auxiliares
 ```
 
-## 🛠️ Tecnologías Utilizadas
-
-- [Next.js](https://nextjs.org/) - Framework de React
-- [TypeScript](https://www.typescriptlang.org/) - Superset de JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) - Framework de CSS
-- [Axios](https://axios-http.com/) - Cliente HTTP
-- [Lucide React](https://lucide.dev/) - Iconos
 
 ## ⚙️ Scripts Disponibles
 

@@ -64,10 +64,7 @@ export function useCourses(): UseCourses {
     
     const term = searchTerm.toLowerCase()
     return courses.filter(course => 
-      course.title.toLowerCase().includes(term) || 
-      course.description.toLowerCase().includes(term) ||
-      course.category.toLowerCase().includes(term) ||
-      course.teacher.toLowerCase().includes(term)
+      course.title.toLowerCase().includes(term)
     )
   }, [courses, searchTerm])
 
