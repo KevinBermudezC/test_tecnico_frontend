@@ -154,12 +154,10 @@ export function CourseGrid() {
   }
 
   return (
-    <main className="flex-1 bg-[#1A0B26]">
-      <div className="p-8 h-full overflow-y-auto">
-        <h1 className="text-3xl font-bold text-white mb-8">Cursos Disponibles</h1>
-        <CourseSearch onSearch={handleSearch} />
-        {renderContent()}
-      </div>
-    </main>
+    <div className="mt-8">
+      <h2 className="text-2xl font-bold text-white mb-6">Cursos Disponibles</h2>
+      <CourseSearch onSearch={handleSearch} />
+      {renderContent()}
+    </div>
   )
 } 
